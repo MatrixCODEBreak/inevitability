@@ -652,3 +652,137 @@
   line-height: 1;
   color: var(--v2-state-fg-danger);
 }
+
+/* =============================================================================
+   SACRED BUILDING — Settings surface overlay
+   Applied on top of the existing settings-v2 layout rules.
+   Tokens from sacred-building-motifs.css; do not re-define --sb-* here.
+   ============================================================================= */
+
+/* Settings dialog container: frosted glass (overrides --v2-background-bg-base) */
+[data-component="dialog-v2"][data-variant="settings"] [data-slot="dialog-container"] {
+  background: var(--sb-glass-bg);
+  border: 1px solid var(--sb-glass-border);
+  backdrop-filter: blur(var(--sb-glass-blur));
+  -webkit-backdrop-filter: blur(var(--sb-glass-blur));
+  box-shadow:
+    0 20px 40px oklch(0 0 0 / 0.55),
+    0 0 16px 0 oklch(0.78 0.13 75 / 0.08);
+}
+
+/* Nav tabs list: void-layer background */
+[data-component="tabs-v2"][data-variant="settings"][data-orientation="vertical"] [data-slot="tabs-v2-list"] {
+  background-color: var(--sb-void-layer);
+  border-right: 1px solid var(--sb-glass-border);
+}
+
+/* Tab header: void-mid with bottom gold fade divider */
+.settings-v2-tab-header {
+  background: linear-gradient(
+    to bottom,
+    var(--sb-void-mid) calc(100% - 24px),
+    transparent
+  ) !important;
+}
+
+/* Tab title: gold gradient text */
+.settings-v2-tab-title {
+  color: transparent;
+  background: var(--sb-gradient-gold-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section title: slightly gold-tinted */
+.settings-v2-section-title {
+  color: var(--sb-gold-accent-fg);
+}
+
+/* Settings list container: frosted glass card */
+[data-component="settings-v2-list"] {
+  background-color: var(--sb-glass-bg);
+  box-shadow:
+    inset 0 0 0 1px var(--sb-glass-border),
+    0 0 12px 0 oklch(0.78 0.13 75 / 0.05);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Row dividers: gold fade */
+[data-component="settings-v2-row"] {
+  border-bottom-color: transparent;
+  background-image: var(--sb-gradient-divider);
+  background-size: 100% 0.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+}
+
+[data-component="settings-v2-row"]:last-child {
+  background-image: none;
+}
+
+/* Row title: slightly warmer text */
+[data-slot="settings-v2-row-title"] {
+  color: var(--sb-text-primary);
+}
+
+/* Provider rows: gold fade bottom border */
+.settings-v2-provider-row {
+  border-bottom-color: transparent;
+  background-image: var(--sb-gradient-divider);
+  background-size: 100% 0.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+}
+
+.settings-v2-provider-row:last-child {
+  background-image: none;
+}
+
+/* Provider name: warm text */
+.settings-v2-provider-name {
+  color: var(--sb-text-primary);
+}
+
+/* View-all link: gold accent */
+.settings-v2-providers-view-all {
+  color: var(--sb-gold-accent-fg);
+  transition: color 150ms ease;
+}
+
+.settings-v2-providers-view-all:hover {
+  color: var(--sb-gold);
+}
+
+/* Keybind buttons: gold focus ring */
+.settings-v2-keybind-button:focus-visible {
+  outline: none;
+  box-shadow: var(--sb-focus-ring);
+}
+
+/* Nav footer labels: dim gold */
+.settings-v2-nav-footer > span {
+  color: oklch(0.78 0.13 75 / 0.35);
+}
+
+/* Shortcuts / servers rows dividers: gold fade */
+.settings-v2-shortcuts [data-component="settings-v2-list"] > div:not(:last-child),
+.settings-v2-servers-row:not(:last-child) {
+  border-bottom-color: transparent;
+  background-image: var(--sb-gradient-divider);
+  background-size: 100% 0.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+}
+
+/* Server dialog: frosted glass */
+[data-component="dialog-v2"].settings-v2-server-dialog [data-slot="dialog-container"] {
+  background: var(--sb-glass-bg);
+  border: 1px solid var(--sb-glass-border);
+  backdrop-filter: blur(var(--sb-glass-blur));
+  -webkit-backdrop-filter: blur(var(--sb-glass-blur));
+  box-shadow:
+    0 16px 32px oklch(0 0 0 / 0.55),
+    0 0 16px 0 oklch(0.78 0.13 75 / 0.08);
+}
