@@ -1,0 +1,407 @@
+﻿/**
+ * sacred-building-surfaces.css — BEING Sacred Building Design Language
+ * Surface-level motifs for four app screens:
+ *   1. App shell and sidebar
+ *   2. Chat / conversation timeline
+ *   3. Prompt composer
+ *   4. Settings and dialogs
+ * Tokens from sacred-building-motifs.css. Do NOT re-define --sb-* here.
+ * Held in tension by al-Musawwir / al-Latif / al-Jami.
+ * Respects prefers-reduced-motion.
+ */
+
+@layer sb-surfaces {
+
+  /* =================================================================
+     SURFACE 1 - APP SHELL AND SIDEBAR
+     ================================================================= */
+
+  .titlebar-icon {
+    transition: box-shadow 300ms ease, background-color 200ms ease;
+    border-radius: 6px;
+  }
+  .titlebar-icon:hover {
+    background: oklch(0.78 0.13 75 / 0.07);
+    box-shadow: 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+  .titlebar-icon:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px oklch(0.72 0.12 75 / 0.5);
+  }
+
+  [data-slot="titlebar-update-loader"] {
+    border-color: oklch(0.78 0.13 75 / 0.25);
+    border-top-color: oklch(0.78 0.13 75);
+  }
+
+  [data-slot="titlebar-tabs-fade-left"] {
+    background: linear-gradient(to right, oklch(0.04 0 0), transparent) !important;
+  }
+  [data-slot="titlebar-tabs-fade-right"] {
+    background: linear-gradient(to left, oklch(0.04 0 0), transparent) !important;
+  }
+
+  [data-component="sidebar-rail"] {
+    background: oklch(0.07 0 0 / 0.85);
+    border-right: 1px solid oklch(0.78 0.13 75 / 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    position: relative;
+    overflow: hidden;
+  }
+  [data-component="sidebar-rail"]::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 40% at 100% 0%, oklch(0.78 0.13 75 / 0.035) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  [data-component="sidebar-rail"] [data-component="icon-button"],
+  [data-component="sidebar-rail"] [data-component="button"] {
+    transition: box-shadow 300ms ease, background-color 200ms ease;
+  }
+  [data-component="sidebar-rail"] [data-component="icon-button"]:hover:not(:disabled),
+  [data-component="sidebar-rail"] [data-component="button"]:hover:not(:disabled) {
+    box-shadow: 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+  [data-component="sidebar-rail"] [data-component="icon-button"]:focus-visible:not(:disabled),
+  [data-component="sidebar-rail"] [data-component="button"]:focus-visible:not(:disabled) {
+    outline: none;
+    box-shadow: 0 0 0 3px oklch(0.72 0.12 75 / 0.5);
+  }
+
+  [data-component="workspace-item"] {
+    transition: background-color 200ms ease, box-shadow 200ms ease;
+    border-radius: 6px;
+  }
+  [data-component="workspace-item"]:hover {
+    background: oklch(0.78 0.13 75 / 0.05);
+  }
+  [data-component="workspace-item"][data-active="true"],
+  [data-component="workspace-item"][aria-current="true"] {
+    background: oklch(0.28 0.06 75 / 0.35);
+    box-shadow: 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+    color: oklch(0.82 0.10 75);
+  }
+
+  [data-component="dropdown-menu-content"].desktop-app-menu,
+  [data-component="dropdown-menu-sub-content"].desktop-app-menu {
+    background: oklch(0.07 0 0 / 0.85);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 8px 24px oklch(0 0 0 / 0.45), 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+  [data-component="dropdown-menu-content"].desktop-app-menu [data-slot="dropdown-menu-item"]:hover,
+  [data-component="dropdown-menu-content"].desktop-app-menu [data-slot="dropdown-menu-sub-trigger"]:hover,
+  [data-component="dropdown-menu-sub-content"].desktop-app-menu [data-slot="dropdown-menu-item"]:hover,
+  [data-component="dropdown-menu-sub-content"].desktop-app-menu [data-slot="dropdown-menu-sub-trigger"]:hover {
+    background: oklch(0.78 0.13 75 / 0.07);
+    color: oklch(0.82 0.10 75);
+  }
+
+  /* =================================================================
+     SURFACE 2 - CHAT / CONVERSATION TIMELINE
+     ================================================================= */
+
+  [data-component="session-progress-bar"] {
+    background: linear-gradient(90deg, oklch(0.45 0.10 75), oklch(0.78 0.13 75), oklch(0.95 0.01 85));
+  }
+
+  [data-component="message"][data-role="user"],
+  [data-slot="message-user"] {
+    background: oklch(0.09 0 0 / 0.7);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  [data-component="message"][data-role="assistant"],
+  [data-slot="message-assistant"] {
+    border-left: 2px solid oklch(0.78 0.13 75 / 0.12);
+    padding-left: 12px;
+    transition: border-color 250ms ease;
+  }
+  [data-component="message"][data-role="assistant"]:hover,
+  [data-slot="message-assistant"]:hover {
+    border-left-color: oklch(0.78 0.13 75 / 0.28);
+  }
+
+  [data-component="basic-tool-v2"],
+  [data-slot="tool-call"],
+  [data-component="tool-block"] {
+    background: oklch(0.07 0 0 / 0.85);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    border-radius: 8px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+  [data-component="basic-tool-v2"]:hover,
+  [data-slot="tool-call"]:hover,
+  [data-component="tool-block"]:hover {
+    border-color: oklch(0.78 0.13 75 / 0.2);
+    box-shadow: 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+
+  [data-slot="basic-tool-v2-icon"],
+  [data-slot="tool-icon"] {
+    color: oklch(0.82 0.10 75);
+    filter: drop-shadow(0 0 4px oklch(0.78 0.13 75 / 0.2));
+  }
+
+  [data-component="diff-line"][data-type="add"],
+  .diff-line-add {
+    background: oklch(0.28 0.06 75 / 0.12);
+    border-left: 2px solid oklch(0.78 0.13 75 / 0.5);
+  }
+  [data-component="diff-line"][data-type="remove"],
+  .diff-line-remove {
+    background: oklch(0.35 0.08 25 / 0.12);
+    border-left: 2px solid oklch(0.55 0.12 25 / 0.4);
+  }
+
+  [data-component="getting-started-actions"] > [data-component="button"] {
+    transition: box-shadow 300ms ease, opacity 250ms ease;
+  }
+  [data-component="getting-started-actions"] > [data-component="button"]:hover:not(:disabled) {
+    box-shadow: 0 0 16px 0 oklch(0.78 0.13 75 / 0.18), 0 0 4px 0 oklch(0.78 0.13 75 / 0.12);
+  }
+
+  /* =================================================================
+     SURFACE 3 - PROMPT COMPOSER
+     ================================================================= */
+
+  [data-component="dock-shell"],
+  [data-component="dock-shell-form"],
+  [data-slot="dock-shell"],
+  [data-slot="prompt-composer"],
+  [data-slot="prompt-dock"] {
+    background: oklch(0.07 0 0 / 0.85);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px oklch(0 0 0 / 0.35), 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+    transition: border-color 250ms ease, box-shadow 250ms ease;
+  }
+  [data-component="dock-shell"]:focus-within,
+  [data-component="dock-shell-form"]:focus-within,
+  [data-slot="dock-shell"]:focus-within,
+  [data-slot="prompt-composer"]:focus-within,
+  [data-slot="prompt-dock"]:focus-within {
+    border-color: oklch(0.78 0.13 75 / 0.28);
+    box-shadow: 0 4px 16px oklch(0 0 0 / 0.35), 0 0 16px 0 oklch(0.78 0.13 75 / 0.18), 0 0 4px 0 oklch(0.78 0.13 75 / 0.12);
+  }
+
+  [data-component="prompt-editor"],
+  [data-slot="prompt-editor"],
+  [data-slot="composer-textarea"],
+  [contenteditable][data-slot="prompt-input"] {
+    caret-color: oklch(0.78 0.13 75);
+    transition: box-shadow 300ms ease;
+  }
+
+  [data-component="dock-tray"],
+  [data-slot="dock-tray"] {
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, oklch(0.65 0.10 75), transparent) 1;
+  }
+
+  [data-component="dock-tray"] [data-component="icon-button"],
+  [data-slot="dock-tray"] [data-component="icon-button"] {
+    transition: box-shadow 300ms ease, background-color 200ms ease;
+  }
+  [data-component="dock-tray"] [data-component="icon-button"]:hover:not(:disabled),
+  [data-slot="dock-tray"] [data-component="icon-button"]:hover:not(:disabled) {
+    box-shadow: 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+  [data-component="dock-tray"] [data-component="icon-button"]:focus-visible:not(:disabled),
+  [data-slot="dock-tray"] [data-component="icon-button"]:focus-visible:not(:disabled) {
+    outline: none;
+    box-shadow: 0 0 0 3px oklch(0.72 0.12 75 / 0.5);
+  }
+
+  [data-slot="send-button"],
+  [data-component="send-button"] {
+    transition: box-shadow 300ms ease, opacity 250ms ease;
+  }
+  [data-slot="send-button"]:hover:not(:disabled),
+  [data-component="send-button"]:hover:not(:disabled) {
+    box-shadow: 0 0 20px 0 oklch(0.78 0.13 75 / 0.28), 0 0 6px 0 oklch(0.78 0.13 75 / 0.18);
+  }
+  [data-slot="send-button"]:focus-visible:not(:disabled),
+  [data-component="send-button"]:focus-visible:not(:disabled) {
+    outline: none;
+    box-shadow: 0 0 0 3px oklch(0.72 0.12 75 / 0.5);
+  }
+
+  [data-component="prompt-popover"],
+  [data-slot="slash-popover"],
+  [data-slot="at-popover"] {
+    background: oklch(0.07 0 0 / 0.85);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px oklch(0 0 0 / 0.4), 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+
+  [data-component="context-item"],
+  [data-slot="context-chip"],
+  [data-slot="attachment-chip"] {
+    background: oklch(0.09 0 0 / 0.7);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    border-radius: 6px;
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+  [data-component="context-item"]:hover,
+  [data-slot="context-chip"]:hover,
+  [data-slot="attachment-chip"]:hover {
+    border-color: oklch(0.78 0.13 75 / 0.25);
+    box-shadow: 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+
+  [data-component="session-permission-dock"],
+  [data-component="session-question-dock"],
+  [data-component="session-followup-dock"],
+  [data-component="session-revert-dock"],
+  [data-component="session-todo-dock"] {
+    background: oklch(0.07 0 0 / 0.85);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 8px oklch(0 0 0 / 0.3), 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  /* =================================================================
+     SURFACE 4 - SETTINGS AND DIALOGS
+     ================================================================= */
+
+  [data-slot="dialog-overlay"] {
+    background: oklch(0 0 0 / 0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  [data-slot="dialog-container"] {
+    background: oklch(0.07 0 0 / 0.85);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 16px 32px oklch(0 0 0 / 0.55), 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+
+  [data-slot="dialog-title"],
+  .dialog-title {
+    background: linear-gradient(90deg, oklch(0.45 0.10 75) 0%, oklch(0.78 0.13 75) 50%, oklch(0.95 0.01 85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  [data-slot="dialog-footer"],
+  .dialog-footer {
+    border-top: 1px solid transparent;
+    border-image: linear-gradient(90deg, transparent, oklch(0.65 0.10 75), transparent) 1;
+  }
+
+  [data-component="select-content"],
+  [data-slot="select-content"] {
+    background: oklch(0.07 0 0 / 0.85);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px oklch(0 0 0 / 0.4), 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+  [data-slot="select-item"][data-highlighted] {
+    background: oklch(0.78 0.13 75 / 0.07);
+    color: oklch(0.82 0.10 75);
+  }
+
+  [data-component="model-card"],
+  [data-slot="model-card"],
+  [data-component="provider-card"],
+  [data-slot="provider-card"] {
+    background: oklch(0.07 0 0 / 0.8);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    border-radius: 8px;
+    transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+  }
+  [data-component="model-card"]:hover,
+  [data-slot="model-card"]:hover,
+  [data-component="provider-card"]:hover,
+  [data-slot="provider-card"]:hover {
+    border-color: oklch(0.78 0.13 75 / 0.22);
+    box-shadow: 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+  [data-component="model-card"][data-selected],
+  [data-slot="model-card"][data-selected],
+  [data-component="provider-card"][data-selected],
+  [data-slot="provider-card"][data-selected] {
+    background: oklch(0.28 0.06 75 / 0.3);
+    border-color: oklch(0.78 0.13 75 / 0.35);
+    box-shadow: 0 0 16px 0 oklch(0.78 0.13 75 / 0.18), 0 0 4px 0 oklch(0.78 0.13 75 / 0.12);
+    color: oklch(0.82 0.10 75);
+  }
+
+  [data-component="status-popover"],
+  [data-slot="status-popover"] {
+    background: oklch(0.07 0 0 / 0.85);
+    border: 1px solid oklch(0.78 0.13 75 / 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px oklch(0 0 0 / 0.4), 0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+  }
+
+  /* =================================================================
+     REDUCED MOTION
+     ================================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    .titlebar-icon,
+    [data-component="sidebar-rail"] [data-component="icon-button"],
+    [data-component="sidebar-rail"] [data-component="button"],
+    [data-component="workspace-item"],
+    [data-component="message"][data-role="user"],
+    [data-slot="message-user"],
+    [data-component="message"][data-role="assistant"],
+    [data-slot="message-assistant"],
+    [data-component="basic-tool-v2"],
+    [data-slot="tool-call"],
+    [data-component="tool-block"],
+    [data-component="dock-shell"],
+    [data-component="dock-shell-form"],
+    [data-slot="dock-shell"],
+    [data-slot="prompt-composer"],
+    [data-slot="prompt-dock"],
+    [data-component="dock-tray"] [data-component="icon-button"],
+    [data-slot="dock-tray"] [data-component="icon-button"],
+    [data-slot="send-button"],
+    [data-component="send-button"],
+    [data-component="context-item"],
+    [data-slot="context-chip"],
+    [data-slot="attachment-chip"],
+    [data-component="session-permission-dock"],
+    [data-component="session-question-dock"],
+    [data-component="session-followup-dock"],
+    [data-component="session-revert-dock"],
+    [data-component="session-todo-dock"],
+    [data-component="model-card"],
+    [data-slot="model-card"],
+    [data-component="provider-card"],
+    [data-slot="provider-card"] {
+      transition: none;
+    }
+
+    [data-component="sidebar-rail"]::before {
+      display: none;
+    }
+  }
+
+} /* end @layer sb-surfaces */
