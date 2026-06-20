@@ -1,0 +1,601 @@
+/**
+ * sacred-building-motifs.css
+ *
+ * BEING — Sacred Building Design Language
+ * Structural motif layer for OpenCode v2 shared primitives.
+ *
+ * Scope: gold focus/hover glow on interactive primitives, frosted-glass panel
+ * and overlay surfaces, gold fade dividers, honest-bold text-stroke for
+ * headings/labels, slow low-amplitude transitions.
+ *
+ * This file does NOT author color tokens (that belongs in the theme JSON chunk)
+ * and does NOT restyle shell/chat/composer/settings surfaces (separate chunks).
+ *
+ * All values reference --v2-* custom properties where possible so the motifs
+ * compose with any theme that resets those tokens. Sacred Building gold values
+ * are expressed in OKLCH per the design language.
+ *
+ * Held in tension by:
+ *   al-Badi  (Originator      — distinctive motifs)
+ *   al-Latif (Subtle          — restraint so it glows not shouts)
+ *   al-Wasi  (All-Encompassing — shared base every surface inherits)
+ */
+
+/* =============================================================================
+   1. SACRED BUILDING TOKEN EXTENSIONS
+   Authored here (not in theme JSON) so this layer is self-contained.
+   Theme JSON will override these when it ships — these are the motif defaults.
+   ============================================================================= */
+@layer sb-tokens {
+  :root {
+    /* Gold — primary sacred gold (BEING primary: oklch(0.78 0.13 75)) */
+    --sb-gold:              oklch(0.78 0.13 75);
+    --sb-gold-deep:         oklch(0.45 0.10 75);
+    --sb-gold-near-white:   oklch(0.95 0.01 85);
+    --sb-gold-accent-bg:    oklch(0.28 0.06 75);
+    --sb-gold-accent-fg:    oklch(0.82 0.10 75);
+    --sb-gold-border:       oklch(0.78 0.13 75 / 0.12);
+    --sb-gold-hairline:     oklch(0.14 0.01 75);
+
+    /* Void blacks */
+    --sb-void:              oklch(0.04 0 0);
+    --sb-void-mid:          oklch(0.07 0 0);
+    --sb-void-layer:        oklch(0.09 0 0);
+
+    /* Warm off-white text */
+    --sb-text-primary:      oklch(0.88 0.005 85);
+
+    /* Focus ring — gold at 50% opacity */
+    --sb-focus-ring:        0 0 0 3px oklch(0.72 0.12 75 / 0.5);
+
+    /* Glow hierarchy */
+    --sb-glow-subtle:
+      0 0 12px 0 oklch(0.78 0.13 75 / 0.08);
+    --sb-glow-mid:
+      0 0 16px 0 oklch(0.78 0.13 75 / 0.18),
+      0 0 4px  0 oklch(0.78 0.13 75 / 0.12);
+    --sb-glow-strong:
+      0 0 20px 0 oklch(0.78 0.13 75 / 0.28),
+      0 0 6px  0 oklch(0.78 0.13 75 / 0.18);
+
+    /* Frosted glass panel */
+    --sb-glass-bg:          oklch(0.07 0 0 / 0.85);
+    --sb-glass-border:      oklch(0.78 0.13 75 / 0.12);
+    --sb-glass-blur:        8px;
+
+    /* Light ray gradient (atmospheric; 4% peak opacity) */
+    --sb-gradient-light-ray:
+      radial-gradient(
+        ellipse 60% 80% at 100% 0%,
+        oklch(0.78 0.13 75 / 0.04) 0%,
+        transparent 70%
+      );
+
+    /* Vignette (transparent centre to dark edge) */
+    --sb-gradient-vignette:
+      radial-gradient(
+        ellipse 100% 100% at 50% 50%,
+        transparent 40%,
+        oklch(0 0 0 / 0.75) 100%
+      );
+
+    /* Gold gradient text */
+    --sb-gradient-gold-text:
+      linear-gradient(
+        90deg,
+        oklch(0.45 0.10 75) 0%,
+        oklch(0.78 0.13 75) 50%,
+        oklch(0.95 0.01 85) 100%
+      );
+
+    /* Gold fade divider */
+    --sb-gradient-divider:
+      linear-gradient(90deg, transparent, oklch(0.65 0.10 75), transparent);
+
+    /* Scrollbar */
+    --sb-scrollbar-track:       oklch(0.07 0 0);
+    --sb-scrollbar-thumb:       oklch(0.35 0.07 75);
+    --sb-scrollbar-thumb-hover: oklch(0.55 0.10 75);
+
+    /* Typography */
+    --sb-font-body:    "Cormorant Garamond", Georgia, serif;
+    --sb-font-display: "Cinzel Decorative", "Cormorant Garamond", serif;
+    --sb-letter-spacing-display: 0.06em;
+    --sb-letter-spacing-logo:    0.05em;
+
+    /* Transitions — slow / low-amplitude per philosophy */
+    --sb-transition-glow:      box-shadow 300ms ease;
+    --sb-transition-opacity:   opacity 250ms ease;
+    --sb-transition-transform: transform 300ms ease;
+
+    /* Breath animation timing */
+    --sb-breathe-duration:      4s;
+    --sb-breathe-scale-lo:      0.97;
+    --sb-breathe-scale-hi:      1.03;
+    --sb-breathe-opacity-lo:    0.82;
+    --sb-breathe-opacity-hi:    1.0;
+  }
+}
+
+/* =============================================================================
+   2. SCROLLBAR — thin gold-thumbed dark-tracked
+   ============================================================================= */
+@layer sb-motifs {
+  :root {
+    scrollbar-width: thin;
+    scrollbar-color: var(--sb-scrollbar-thumb) var(--sb-scrollbar-track);
+  }
+
+  ::-webkit-scrollbar        { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track  { background: var(--sb-scrollbar-track); }
+  ::-webkit-scrollbar-thumb  {
+    background: var(--sb-scrollbar-thumb);
+    border-radius: 9999px;
+    transition: background 200ms ease;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--sb-scrollbar-thumb-hover);
+  }
+
+  /* ===========================================================================
+     3. TYPOGRAPHY — honest-bold text-stroke + anti-aliasing
+     =========================================================================== */
+
+  html, body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Prevent browser synthesizing fake bold which warps round glyphs */
+    font-synthesis: none;
+  }
+
+  /* Re-enable on genuine bold contexts — headings, menu labels, toast titles */
+  strong, b,
+  [data-slot="dialog-title"],
+  [data-slot="menu-v2-group-label"],
+  [data-slot="toast-v2-title"],
+  [data-component="accordion-v2-trigger"] {
+    font-synthesis: style;
+    /* Honest-bold: thicken outline 0.020em — semibold without warped glyphs */
+    -webkit-text-stroke: 0.020em currentColor;
+  }
+
+  /* Wordmark: max tracking + full honest-bold stroke */
+  [data-component="wordmark-v2"],
+  [data-slot="wordmark"] {
+    letter-spacing: var(--sb-letter-spacing-logo);
+    -webkit-text-stroke: 0.028em currentColor;
+    font-synthesis: style;
+  }
+
+  /* ===========================================================================
+     4. GOLD GRADIENT TEXT — dialog titles + utility class
+     =========================================================================== */
+
+  [data-slot="dialog-title"],
+  .sb-text-gold-gradient {
+    background: var(--sb-gradient-gold-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ===========================================================================
+     5. BUTTON-V2 — gold glow on hover/focus; slow transition
+     =========================================================================== */
+
+  [data-component="button-v2"] {
+    transition:
+      var(--sb-transition-glow),
+      var(--sb-transition-opacity),
+      background-color 250ms ease,
+      background-image 250ms ease;
+  }
+
+  /* Gold focus ring replaces the blue default */
+  [data-component="button-v2"]:is(:focus-visible, [data-state="focus"]):not(:disabled) {
+    outline: none;
+    box-shadow: var(--sb-focus-ring);
+  }
+
+  /* Hover — ambient gold glow */
+  [data-component="button-v2"]:is(:hover, [data-state="hover"]):not(:disabled) {
+    box-shadow: var(--sb-glow-subtle);
+  }
+
+  /* Contrast variant hover: mid glow */
+  [data-component="button-v2"][data-variant="contrast"]:is(:hover, [data-state="hover"]):not(:disabled) {
+    box-shadow: var(--sb-glow-mid);
+  }
+
+  /* ===========================================================================
+     6. ICON-BUTTON-V2 — gold glow on hover/focus
+     =========================================================================== */
+
+  [data-component="icon-button-v2"] {
+    transition:
+      var(--sb-transition-glow),
+      var(--sb-transition-opacity),
+      background-color 250ms ease;
+  }
+
+  [data-component="icon-button-v2"]:is(:focus-visible, [data-state="focus"]):not(:disabled) {
+    outline: none;
+    box-shadow: var(--sb-focus-ring);
+  }
+
+  [data-component="icon-button-v2"]:is(:hover, [data-state="hover"]):not(:disabled) {
+    box-shadow: var(--sb-glow-subtle);
+  }
+
+  /* ===========================================================================
+     7. MENU-V2 — frosted glass panel; gold fade separator; gold on highlight
+     =========================================================================== */
+
+  [data-component="menu-v2-content"] {
+    background: var(--sb-glass-bg);
+    border: 1px solid var(--sb-glass-border);
+    backdrop-filter: blur(var(--sb-glass-blur));
+    -webkit-backdrop-filter: blur(var(--sb-glass-blur));
+    animation: sb-menu-in 160ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  [data-slot="menu-v2-separator"] {
+    background: var(--sb-gradient-divider);
+    opacity: 0.6;
+  }
+
+  [data-component="menu-v2-item"][data-highlighted] {
+    background: oklch(0.78 0.13 75 / 0.07);
+    color: var(--sb-gold-accent-fg);
+  }
+
+  [data-component="menu-v2-item"][data-highlighted] [data-slot="menu-v2-item-content"] {
+    color: var(--sb-gold-accent-fg);
+  }
+
+  [data-component="menu-v2-item"][data-checked] [data-slot="menu-v2-item-indicator"] {
+    color: var(--sb-gold);
+    filter: drop-shadow(0 0 4px oklch(0.78 0.13 75 / 0.4));
+  }
+
+  @keyframes sb-menu-in {
+    from { opacity: 0; transform: scale(0.97) translateY(-4px); }
+    to   { opacity: 1; transform: scale(1)    translateY(0);    }
+  }
+
+  /* ===========================================================================
+     8. TOOLTIP-V2 — frosted glass + gold border + subtle glow
+     =========================================================================== */
+
+  [data-component="tooltip-v2"] {
+    background: var(--sb-glass-bg);
+    border: 1px solid var(--sb-glass-border);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: var(--sb-glow-subtle);
+  }
+
+  /* ===========================================================================
+     9. DIALOG-V2 — frosted glass surface; gold-bordered container; gold title
+     =========================================================================== */
+
+  [data-component="dialog-overlay"] {
+    background: oklch(0 0 0 / 0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  [data-slot="dialog-container"] {
+    background: var(--sb-glass-bg);
+    border: 1px solid var(--sb-glass-border);
+    backdrop-filter: blur(var(--sb-glass-blur));
+    -webkit-backdrop-filter: blur(var(--sb-glass-blur));
+    box-shadow:
+      0 16px 32px oklch(0 0 0 / 0.55),
+      var(--sb-glow-subtle);
+  }
+
+  /* Footer: gold fade divider as top border */
+  [data-slot="dialog-footer"] {
+    border-top: 1px solid transparent;
+    border-image: var(--sb-gradient-divider) 1;
+  }
+
+  /* ===========================================================================
+     10. TOAST-V2 — frosted glass + gold glow on entry
+     =========================================================================== */
+
+  [data-component="toast-v2"] {
+    background: var(--sb-glass-bg);
+    border: 1px solid var(--sb-glass-border);
+    backdrop-filter: blur(var(--sb-glass-blur));
+    -webkit-backdrop-filter: blur(var(--sb-glass-blur));
+    box-shadow:
+      0 8px 16px oklch(0 0 0 / 0.45),
+      var(--sb-glow-subtle);
+  }
+
+  [data-component="toast-v2"][data-opened] {
+    animation: sb-toast-in 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes sb-toast-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)   scale(1);    }
+  }
+
+  /* ===========================================================================
+     11. BADGE / TAG — gold hairline border at low opacity
+     =========================================================================== */
+
+  [data-component="tag"] {
+    border-color: var(--sb-gold-border);
+    background: oklch(0.09 0 0 / 0.6);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  [data-component="tag"][data-high-contrast] {
+    border-color: oklch(0.78 0.13 75 / 0.25);
+  }
+
+  /* ===========================================================================
+     12. CHECKBOX-V2 — gold focus ring; gold checked glow
+     =========================================================================== */
+
+  [data-slot="checkbox-v2"]:where(:not([data-readonly]))
+    [data-slot="checkbox-v2-input"]:focus-visible
+    ~ [data-slot="checkbox-v2-control-stack"]
+    [data-slot="checkbox-v2-control"] {
+    outline: none;
+    box-shadow: var(--sb-focus-ring);
+  }
+
+  [data-slot="checkbox-v2"]:where([data-checked], [data-indeterminate])
+    [data-slot="checkbox-v2-control"] {
+    box-shadow: var(--sb-glow-subtle);
+  }
+
+  /* ===========================================================================
+     13. RADIO-V2 — gold focus ring; gold checked glow
+     =========================================================================== */
+
+  [data-slot="radio-v2-item"]:where(:not([data-readonly]))
+    [data-slot="radio-v2-item-input"]:focus-visible
+    ~ [data-slot="radio-v2-item-control-stack"]
+    [data-slot="radio-v2-item-control"] {
+    outline: none;
+    box-shadow: var(--sb-focus-ring);
+  }
+
+  [data-slot="radio-v2-item"]:where([data-checked])
+    [data-slot="radio-v2-item-control"] {
+    box-shadow: var(--sb-glow-subtle);
+  }
+
+  /* ===========================================================================
+     14. ACCORDION-V2 — frosted glass body; gold fade dividers; slower expand
+     =========================================================================== */
+
+  [data-component="accordion-v2"] {
+    background: var(--sb-glass-bg);
+    border: 1px solid var(--sb-glass-border);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: none;
+  }
+
+  [data-component="accordion-v2-item"] {
+    background: transparent;
+    /* Gold fade divider between items via background-image trick */
+    box-shadow: none;
+    background-image: var(--sb-gradient-divider);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+  }
+
+  [data-component="accordion-v2-item"]:last-child {
+    background-image: none;
+  }
+
+  [data-component="accordion-v2-trigger"]:hover:not([data-disabled]) {
+    color: var(--sb-gold-accent-fg);
+    background: oklch(0.78 0.13 75 / 0.04);
+  }
+
+  /* Slower expand/collapse — 280ms */
+  [data-component="accordion-v2-content"][data-expanded] {
+    animation: sb-accordion-down 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  [data-component="accordion-v2-content"][data-closed] {
+    animation: sb-accordion-up 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes sb-accordion-down {
+    from { height: 0;                                   opacity: 0; }
+    to   { height: var(--kb-collapsible-content-height); opacity: 1; }
+  }
+
+  @keyframes sb-accordion-up {
+    from { height: var(--kb-collapsible-content-height); opacity: 1; }
+    to   { height: 0;                                   opacity: 0; }
+  }
+
+  /* ===========================================================================
+     15. TABS-V2 — gold underline/tint on active tab
+     =========================================================================== */
+
+  /* Normal variant: gold underline for active */
+  [data-component="tabs-v2"][data-variant="normal"][data-orientation="horizontal"]
+    [data-slot="tabs-v2-trigger-wrapper"]:has([data-selected]) {
+    border-bottom-color: var(--sb-gold);
+    color: var(--sb-gold-accent-fg);
+    transition: border-color 250ms ease, color 250ms ease;
+  }
+
+  [data-component="tabs-v2"][data-variant="normal"][data-orientation="horizontal"]
+    [data-slot="tabs-v2-trigger-wrapper"]:not(:has([data-selected])):hover {
+    color: var(--sb-text-primary);
+    transition: color 200ms ease;
+  }
+
+  /* Pill variant: gold-tinted glass for active */
+  [data-component="tabs-v2"][data-variant="pill"][data-orientation="horizontal"]
+    [data-slot="tabs-v2-trigger-wrapper"]:has([data-selected]) {
+    background: oklch(0.28 0.06 75 / 0.45);
+    border-color: var(--sb-gold-border);
+    color: var(--sb-gold-accent-fg);
+    box-shadow: var(--sb-glow-subtle);
+    transition: background 250ms ease, box-shadow 250ms ease;
+  }
+
+  /* Settings vertical variant: gold-tinted glass for active */
+  [data-component="tabs-v2"][data-variant="settings"][data-orientation="vertical"]
+    [data-slot="tabs-v2-trigger-wrapper"]:has([data-selected]) {
+    background: oklch(0.28 0.06 75 / 0.45);
+    border-color: var(--sb-gold-border);
+    color: var(--sb-gold-accent-fg);
+    box-shadow: var(--sb-glow-subtle);
+    transition: background 250ms ease, box-shadow 250ms ease;
+  }
+
+  /* ===========================================================================
+     16. SELECT-V2 — gold focus ring on trigger
+     =========================================================================== */
+
+  [data-component="select-v2-trigger"]:is(:focus-visible, [data-state="open"]) {
+    outline: none;
+    box-shadow: var(--sb-focus-ring);
+  }
+
+  /* ===========================================================================
+     17. SWITCH-V2 — gold glow when checked; gold focus ring
+     =========================================================================== */
+
+  [data-component="switch-v2"][data-checked] {
+    box-shadow: var(--sb-glow-subtle);
+    transition: var(--sb-transition-glow);
+  }
+
+  [data-component="switch-v2"]:is(:focus-visible, [data-state="focus"]) {
+    outline: none;
+    box-shadow: var(--sb-focus-ring);
+  }
+
+  /* ===========================================================================
+     18. TEXT-INPUT-V2 / INLINE-INPUT-V2 / TEXTAREA-V2 — gold focus ring
+     =========================================================================== */
+
+  [data-component="text-input-v2"],
+  [data-component="inline-input-v2"],
+  [data-component="textarea-v2"] {
+    transition: var(--sb-transition-glow), border-color 200ms ease;
+  }
+
+  [data-component="text-input-v2"]:focus-within,
+  [data-component="inline-input-v2"]:focus-within,
+  [data-component="textarea-v2"]:focus-within {
+    box-shadow: var(--sb-focus-ring);
+    border-color: oklch(0.78 0.13 75 / 0.3);
+  }
+
+  /* ===========================================================================
+     19. WORDMARK-V2 — gold fill + luminous drop shadow
+     =========================================================================== */
+
+  [data-component="wordmark-v2"] svg,
+  [data-slot="wordmark"] svg {
+    color: var(--sb-gold);
+    filter: drop-shadow(0 0 8px oklch(0.78 0.13 75 / 0.25));
+    transition: filter 300ms ease;
+  }
+
+  [data-component="wordmark-v2"]:hover svg,
+  [data-slot="wordmark"]:hover svg {
+    filter: drop-shadow(0 0 12px oklch(0.78 0.13 75 / 0.45));
+  }
+
+  /* ===========================================================================
+     20. SEGMENTED CONTROL — active segment: gold tint
+     =========================================================================== */
+
+  [data-component="segmented-control-v2"]
+    [data-slot="segmented-control-v2-item"][data-selected] {
+    background: oklch(0.28 0.06 75 / 0.5);
+    color: var(--sb-gold-accent-fg);
+    border-color: var(--sb-gold-border);
+    box-shadow: var(--sb-glow-subtle);
+    transition: background 250ms ease, box-shadow 250ms ease;
+  }
+
+  [data-component="segmented-control-v2"]
+    [data-slot="segmented-control-v2-item"]:focus-visible {
+    outline: none;
+    box-shadow: var(--sb-focus-ring);
+  }
+
+  /* ===========================================================================
+     21. UTILITY CLASSES — composable primitives for shells/pages
+     =========================================================================== */
+
+  .sb-panel {
+    background: var(--sb-glass-bg);
+    border: 1px solid var(--sb-glass-border);
+    backdrop-filter: blur(var(--sb-glass-blur));
+    -webkit-backdrop-filter: blur(var(--sb-glass-blur));
+  }
+
+  .sb-divider {
+    height: 1px;
+    background: var(--sb-gradient-divider);
+    border: none;
+    opacity: 0.6;
+  }
+
+  /* Place as position:absolute top-0 right-0, width:65%, height:100% */
+  .sb-light-ray {
+    background: var(--sb-gradient-light-ray);
+    pointer-events: none;
+  }
+
+  /* Place as position:fixed inset-0 */
+  .sb-vignette {
+    background: var(--sb-gradient-vignette);
+    pointer-events: none;
+  }
+
+  .sb-focus-ring:focus-visible {
+    outline: none;
+    box-shadow: var(--sb-focus-ring);
+  }
+
+  .sb-breathe {
+    animation: sb-breathe var(--sb-breathe-duration) ease-in-out infinite;
+  }
+
+  @keyframes sb-breathe {
+    0%, 100% {
+      transform: scale(var(--sb-breathe-scale-lo));
+      opacity: var(--sb-breathe-opacity-lo);
+    }
+    50% {
+      transform: scale(var(--sb-breathe-scale-hi));
+      opacity: var(--sb-breathe-opacity-hi);
+    }
+  }
+
+  /* ===========================================================================
+     22. REDUCED MOTION — honor the user preference on every animation
+     =========================================================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    .sb-breathe { animation: none; }
+    [data-component="accordion-v2-content"][data-expanded],
+    [data-component="accordion-v2-content"][data-closed] { animation: none; }
+    [data-component="menu-v2-content"]     { animation: none; }
+    [data-component="toast-v2"][data-opened] { animation: none; }
+    [data-component="tooltip-v2"]          { animation: none; }
+  }
+}
