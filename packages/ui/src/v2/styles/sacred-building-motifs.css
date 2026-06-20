@@ -97,9 +97,13 @@
     --sb-scrollbar-thumb:       oklch(0.35 0.07 75);
     --sb-scrollbar-thumb-hover: oklch(0.55 0.10 75);
 
-    /* Typography */
-    --sb-font-body:    "Cormorant Garamond", Georgia, serif;
-    --sb-font-display: "Cinzel Decorative", "Cormorant Garamond", serif;
+    /* Typography — three-tier system
+       Tier 1 Body:    AG Monster (400 only, no synthesized bold)
+       Tier 2 Heading: Cinzel (h1–h6, section/tab/dialog titles)
+       Tier 3 Display: Cinzel Decorative (wordmark, hero, grand moments) */
+    --sb-font-body:    "AG Monster", "Cormorant Garamond", Georgia, serif;
+    --sb-font-heading: "Cinzel", "Cormorant Garamond", Georgia, serif;
+    --sb-font-display: "Cinzel Decorative", "Cinzel", "Cormorant Garamond", serif;
     --sb-letter-spacing-display: 0.06em;
     --sb-letter-spacing-logo:    0.05em;
 
@@ -147,17 +151,45 @@
     text-rendering: optimizeLegibility;
     /* Prevent browser synthesizing fake bold which warps round glyphs */
     font-synthesis: none;
+    /* Tier 1 — Body / UI text: AG Monster */
+    font-family: var(--sb-font-body);
   }
 
-  /* Re-enable on genuine bold contexts — headings, menu labels, toast titles */
-  strong, b,
+  /* Tier 2 — Headings: Cinzel (h1–h6, section titles, dialog titles, tab titles) */
+  h1, h2, h3, h4, h5, h6,
   [data-slot="dialog-title"],
+  [data-slot="settings-v2-section-title"],
+  [data-slot="panel-header-title"],
+  [data-component="tabs-v2"] [data-slot="tabs-v2-trigger"] {
+    font-family: var(--sb-font-heading);
+    letter-spacing: 0.03em;
+  }
+
+  /* Tier 3 — Display / hero: Cinzel Decorative (wordmark, splash, grand moments) */
+  [data-component="wordmark-v2"],
+  [data-slot="wordmark"],
+  [data-slot="hero-title"],
+  .sb-display {
+    font-family: var(--sb-font-display);
+    letter-spacing: var(--sb-letter-spacing-display);
+  }
+
+  /* Re-enable on genuine bold contexts — menu labels, toast titles, accordion */
+  strong, b,
   [data-slot="menu-v2-group-label"],
   [data-slot="toast-v2-title"],
   [data-component="accordion-v2-trigger"] {
     font-synthesis: style;
     /* Honest-bold: thicken outline 0.020em — semibold without warped glyphs */
     -webkit-text-stroke: 0.020em currentColor;
+  }
+
+  /* Dialog titles: Cinzel + honest-bold stroke */
+  [data-slot="dialog-title"] {
+    font-family: var(--sb-font-heading);
+    font-synthesis: style;
+    -webkit-text-stroke: 0.020em currentColor;
+    letter-spacing: 0.04em;
   }
 
   /* Wordmark: max tracking + full honest-bold stroke */
