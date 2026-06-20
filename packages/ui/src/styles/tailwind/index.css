@@ -37,6 +37,9 @@
 
   --font-sans: var(--font-family-sans);
   --font-sans--font-feature-settings: var(--font-family-sans--font-feature-settings);
+  /* BEING tier-2 heading (Cinzel) and tier-3 display (Cinzel Decorative) */
+  --font-heading: var(--font-family-heading);
+  --font-display: var(--font-family-display);
   --font-mono: var(--font-family-mono);
   --font-mono--font-feature-settings: var(--font-family-mono--font-feature-settings);
 

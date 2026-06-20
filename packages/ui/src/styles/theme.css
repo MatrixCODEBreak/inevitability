@@ -1,5 +1,12 @@
 :root {
-  --font-family-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* ── BEING Three-Tier Typography ──────────────────────────────────────────
+     Tier 1 — Body / UI text:   AG Monster (400 only; no synthesized bold)
+     Tier 2 — Headings h1–h6:  Cinzel (serene, authoritative)
+     Tier 3 — Display / hero:  Cinzel Decorative (grand moments only)
+     ──────────────────────────────────────────────────────────────────────── */
+  --font-family-sans: "AG Monster", "Cormorant Garamond", Georgia, serif;
+  --font-family-heading: "Cinzel", "Cormorant Garamond", Georgia, serif;
+  --font-family-display: "Cinzel Decorative", "Cinzel", "Cormorant Garamond", Georgia, serif;
   --font-family-sans--font-feature-settings: normal;
   --font-family-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
