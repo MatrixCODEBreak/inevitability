@@ -1,18 +1,6 @@
-/* ── BEING Typography — Google Fonts (Cinzel, Cinzel Decorative) ────────── */
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&display=swap");
-
 @import "@opencode-ai/ui/styles/tailwind";
 @import "@opencode-ai/ui/v2/styles/tailwind.css";
 @import "./sacred-building-surfaces.css";
-
-/* ── AG Monster — BEING brand body font (Regular/400 only; one face) ──────── */
-@font-face {
-  font-family: "AG Monster";
-  src: url("/assets/AGMonster-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 
 @font-face {
   font-family: "JetBrainsMono Nerd Font Mono";
