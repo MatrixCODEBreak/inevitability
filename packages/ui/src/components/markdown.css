@@ -30,18 +30,24 @@
   h5,
   h6 {
     font-size: 14px;
-    color: var(--text-strong);
+    color: var(--markdown-heading);
     font-weight: var(--font-weight-medium);
     margin-top: 0px;
     margin-bottom: 24px;
     line-height: var(--line-height-large);
   }
 
-  /* Emphasis & Strong: Neutral strong color */
+  /* Emphasis & Strong: themed accents from the response palette */
   strong,
   b {
-    color: var(--text-strong);
+    color: var(--markdown-strong);
     font-weight: var(--font-weight-medium);
+  }
+
+  em,
+  i {
+    color: var(--markdown-emph);
+    font-style: italic;
   }
 
   /* Paragraphs */
