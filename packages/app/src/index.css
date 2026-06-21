@@ -28,6 +28,60 @@
   font-style: normal;
 }
 
+/* ── Sacred Building typeface system ──
+   Body: AG Monster · Headings: Cinzel · Display: Cinzel Decorative.
+   Declared unlayered so the var overrides below win over the themed
+   default (Inter) without depending on @layer ordering. Mono is left
+   untouched — code/terminal stays JetBrains Mono. */
+@font-face {
+  font-family: "AG Monster";
+  src: url("/assets/AGMONSTER-Regular.otf") format("opentype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cinzel";
+  src: url("/assets/Cinzel-400.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cinzel";
+  src: url("/assets/Cinzel-600.woff2") format("woff2");
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cinzel Decorative";
+  src: url("/assets/CinzelDecorative-700.woff2") format("woff2");
+  font-weight: 600 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-family-sans: "AG Monster", "Inter", sans-serif;
+  --font-family-text: "AG Monster", "Inter", sans-serif;
+  --v2-font-family-sans: "AG Monster", "Inter", sans-serif;
+}
+
+/* Headings → Cinzel; wordmark/hero → Cinzel Decorative. Unlayered to win. */
+h1, h2, h3, h4, h5, h6,
+[data-slot="dialog-title"],
+[data-slot="menu-v2-group-label"],
+[data-slot="toast-v2-title"],
+[data-component="accordion-v2-trigger"] {
+  font-family: "Cinzel", "AG Monster", serif;
+  letter-spacing: 0.02em;
+}
+[data-component="wordmark-v2"],
+[data-slot="wordmark"] {
+  font-family: "Cinzel Decorative", "Cinzel", serif;
+}
+
 @layer components {
   @keyframes session-progress-whip {
     0% {
