@@ -118,10 +118,10 @@
     /* ── BEING Three-Tier Typography (v2) ────────────────────────────────────
        Body → AG Monster, Headings → Cinzel, Display → Cinzel Decorative
        ──────────────────────────────────────────────────────────────────────── */
-    --font-family-text: "AG Monster", "Cormorant Garamond", Georgia, serif;
-    --v2-font-family-sans: "AG Monster", "Cormorant Garamond", Georgia, serif;
-    --v2-font-family-heading: "Cinzel", "Cormorant Garamond", Georgia, serif;
-    --v2-font-family-display: "Cinzel Decorative", "Cinzel", "Cormorant Garamond", Georgia, serif;
+    --font-family-text: "AG Monster", "Inter", sans-serif;
+    --v2-font-family-sans: "AG Monster", "Inter", sans-serif;
+    --v2-font-family-heading: "Cinzel", "AG Monster", serif;
+    --v2-font-family-display: "Cinzel Decorative", "Cinzel", serif;
   }
 
   /* OS preference fallback (no JS needed) */

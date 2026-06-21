@@ -101,9 +101,9 @@
        Tier 1 Body:    AG Monster (400 only, no synthesized bold)
        Tier 2 Heading: Cinzel (h1–h6, section/tab/dialog titles)
        Tier 3 Display: Cinzel Decorative (wordmark, hero, grand moments) */
-    --sb-font-body:    "AG Monster", "Cormorant Garamond", Georgia, serif;
-    --sb-font-heading: "Cinzel", "Cormorant Garamond", Georgia, serif;
-    --sb-font-display: "Cinzel Decorative", "Cinzel", "Cormorant Garamond", serif;
+    --sb-font-body:    "AG Monster", "Inter", sans-serif;
+    --sb-font-heading: "Cinzel", "AG Monster", serif;
+    --sb-font-display: "Cinzel Decorative", "Cinzel", serif;
     --sb-letter-spacing-display: 0.06em;
     --sb-letter-spacing-logo:    0.05em;
 
