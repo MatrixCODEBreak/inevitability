@@ -103,6 +103,11 @@ const getCurrentUrl = () => {
   if (location.hostname.includes("opencode.ai")) return "http://localhost:4096"
   if (import.meta.env.DEV)
     return `http://${import.meta.env.VITE_OPENCODE_SERVER_HOST ?? "localhost"}:${import.meta.env.VITE_OPENCODE_SERVER_PORT ?? "4096"}`
+  // Embed build (served behind BEING's same-origin admin proxy) bakes a base path
+  // so the agent API is reached at location.origin + base (e.g. /inev-agent).
+  // Unset for the desktop/standalone build → plain same-origin (unchanged).
+  const apiBase = (import.meta.env.VITE_OPENCODE_API_BASE ?? "").trim()
+  if (apiBase) return apiBase.startsWith("http") ? apiBase : location.origin + apiBase
   return location.origin
 }
 

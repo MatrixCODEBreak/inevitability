@@ -20,6 +20,10 @@ const sentry =
     : false
 
 export default defineConfig({
+  // Base is "/" for the desktop/standalone build. The BEING embed build sets
+  // VITE_BASE_PATH=/inev-agent/ so every asset + code-split chunk URL is emitted
+  // under the same-origin admin proxy prefix at BUILD time (no runtime rewrite).
+  base: process.env.VITE_BASE_PATH || "/",
   plugins: [desktopPlugin, sentry] as any,
   server: {
     host: "0.0.0.0",

@@ -174,7 +174,10 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
   name: "Theme",
   init: (props: { defaultTheme?: string; onThemeApplied?: (theme: DesktopTheme, mode: "light" | "dark") => void }) => {
     const themeId = normalize(read(STORAGE_KEYS.THEME_ID) ?? props.defaultTheme) ?? "oc-2"
-    const colorScheme = (read(STORAGE_KEYS.COLOR_SCHEME) as ColorScheme | null) ?? "system"
+    // The BEING embed build forces dark so the cockpit matches its void-and-gold
+    // host (env-gated; the desktop/standalone build is unchanged and follows system).
+    const embedDefaultScheme = (import.meta.env.VITE_OPENCODE_FORCE_DARK ? "dark" : "system") as ColorScheme
+    const colorScheme = (read(STORAGE_KEYS.COLOR_SCHEME) as ColorScheme | null) ?? embedDefaultScheme
     const mode = colorScheme === "system" ? getSystemMode() : colorScheme
     const [store, setStore] = createStore({
       themes: {
@@ -260,7 +263,7 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
 
       const rawTheme = read(STORAGE_KEYS.THEME_ID)
       const savedTheme = normalize(rawTheme ?? props.defaultTheme) ?? "oc-2"
-      const savedScheme = (read(STORAGE_KEYS.COLOR_SCHEME) as ColorScheme | null) ?? "system"
+      const savedScheme = (read(STORAGE_KEYS.COLOR_SCHEME) as ColorScheme | null) ?? embedDefaultScheme
       if (rawTheme && rawTheme !== savedTheme) {
         write(STORAGE_KEYS.THEME_ID, savedTheme)
         clear()

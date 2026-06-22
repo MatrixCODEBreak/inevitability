@@ -16,6 +16,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
+    "build:embed": "VITE_BASE_PATH=/inev-agent/ VITE_OPENCODE_API_BASE=/inev-agent VITE_OPENCODE_FORCE_DARK=true vite build --outDir dist-embed --sourcemap false",
     "serve": "vite preview",
     "test": "bun run test:unit && bun run test:virtualizer",
     "test:unit": "bun test --only-failures --preload ./happydom.ts ./src",
