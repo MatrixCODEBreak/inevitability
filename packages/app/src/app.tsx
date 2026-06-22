@@ -443,6 +443,12 @@ export function AppInterface(props: {
         <ConnectionGate disableHealthCheck={props.disableHealthCheck}>
           <Dynamic
             component={props.router ?? Router}
+            // Match client-side routing to the Vite build base. Under the BEING
+            // embed (base=/inev-agent/) this strips the prefix before matching, so
+            // the `/:dir` segment is a real base64 directory — not the literal
+            // "inev-agent" (which decode64 would turn into a garbage directory and
+            // break every agent request). Desktop build: BASE_URL "/" → base "".
+            base={(import.meta.env.BASE_URL || "/").replace(/\/+$/, "")}
             root={(routerProps) => (
               <TabsProvider>
                 <ServerShell>{routerProps.children}</ServerShell>
