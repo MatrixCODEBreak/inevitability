@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm"
 
 export const UPSERT_CHUNK_SIZE = 500
+export const DATA_SITE_TIERS = ["Go", "go", "Free", "free"]
 const DAY_MS = 86_400_000
 
 export type StatGrain = "day" | "week"
@@ -147,6 +148,18 @@ export function combineRows<T extends StatBaseRow>(left: T, right: T): T {
   }
 }
 
+export function isMissingUniqueUsersColumn(cause: unknown): boolean {
+  return errorText(cause).includes("Unknown column 'unique_users'")
+}
+
+export function omitUniqueUsers<T extends { unique_users?: number }>(rows: T[]) {
+  return rows.map((row) => {
+    const result = { ...row }
+    delete result.unique_users
+    return result
+  })
+}
+
 export function statPeriodKey(row: StatBaseRow) {
   return [row.grain, row.period_key, row.dataset, row.tier, row.client, row.source].join("\u0000")
 }
@@ -242,6 +255,15 @@ export function inserted(column: string) {
   return sql.raw(`values(\`${column}\`)`)
 }
 
+function errorText(cause: unknown): string {
+  if (cause instanceof Error) return `${cause.message} ${errorText((cause as { cause?: unknown }).cause)}`
+  if (typeof cause === "object" && cause)
+    return Object.values(cause as Record<string, unknown>)
+      .map(errorText)
+      .join(" ")
+  return String(cause)
+}
+
 export function weightedAverage(
   left: number | null | undefined,
   leftWeight = 0,
@@ -255,7 +277,12 @@ export function weightedAverage(
 }
 
 export function normalizeTier(value: string) {
-  if (value === "Paid") return "Zen"
+  const normalized = value.toLowerCase()
+  if (normalized === "paid" || normalized === "zen") return "Zen"
+  if (normalized === "go") return "Go"
+  if (normalized === "free") return "Free"
+  if (normalized === "enterprise") return "Enterprise"
+  if (normalized === "all") return "all"
   return value
 }
 
