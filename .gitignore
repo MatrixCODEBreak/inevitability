@@ -32,3 +32,8 @@ UPCOMING_CHANGELOG.md
 logs/
 *.bun-build
 tsconfig.tsbuildinfo
+
+# BEING embed build outputs (local artifacts, never committed)
+packages/app/dist-being/
+packages/app/dist-embed/
+packages/app/__being_build.log
