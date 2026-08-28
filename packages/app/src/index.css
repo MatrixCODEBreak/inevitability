@@ -23,6 +23,8 @@
   #root {
     height: 100vh;
   }
+}
+
 /* ── Sacred Building typeface system ──
    Body: AG Monster · Headings: Cinzel · Display: Cinzel Decorative.
    Declared unlayered so the var overrides below win over the themed
